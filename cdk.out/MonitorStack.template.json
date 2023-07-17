@@ -1,0 +1,164 @@
+{
+ "Resources": {
+  "webHookLambdaServiceRole1A032560": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "webHookLambda3427ABA6": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "2da299d7df44d8208a9382c67df938a9140258eea22317ce58714428af87f513.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "webHookLambdaServiceRole1A032560",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "Runtime": "nodejs18.x"
+   },
+   "DependsOn": [
+    "webHookLambdaServiceRole1A032560"
+   ]
+  },
+  "webHookLambdaAllowInvokeMonitorStackAlarmTopic9F999C82CCFBCA23": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "webHookLambda3427ABA6",
+      "Arn"
+     ]
+    },
+    "Principal": "sns.amazonaws.com",
+    "SourceArn": {
+     "Ref": "AlarmTopicD01E77F9"
+    }
+   }
+  },
+  "webHookLambdaAlarmTopic3DF832BF": {
+   "Type": "AWS::SNS::Subscription",
+   "Properties": {
+    "Protocol": "lambda",
+    "TopicArn": {
+     "Ref": "AlarmTopicD01E77F9"
+    },
+    "Endpoint": {
+     "Fn::GetAtt": [
+      "webHookLambda3427ABA6",
+      "Arn"
+     ]
+    }
+   }
+  },
+  "AlarmTopicD01E77F9": {
+   "Type": "AWS::SNS::Topic",
+   "Properties": {
+    "DisplayName": "AlarmTopic",
+    "TopicName": "AlarmTopic"
+   }
+  },
+  "spacesApi4xxAlarmA15E009C": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 1,
+    "AlarmActions": [
+     {
+      "Ref": "AlarmTopicD01E77F9"
+     }
+    ],
+    "AlarmName": "SpacesApi4xxAlarm",
+    "Dimensions": [
+     {
+      "Name": "ApiName",
+      "Value": "SpacesApi"
+     }
+    ],
+    "MetricName": "4XXError",
+    "Namespace": "AWS/ApiGateway",
+    "OKActions": [
+     {
+      "Ref": "AlarmTopicD01E77F9"
+     }
+    ],
+    "Period": 60,
+    "Statistic": "Sum",
+    "Threshold": 5,
+    "Unit": "Count"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

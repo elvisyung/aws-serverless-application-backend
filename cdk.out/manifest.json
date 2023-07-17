@@ -1,0 +1,94 @@
+{
+  "version": "32.0.0",
+  "artifacts": {
+    "MonitorStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "MonitorStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "MonitorStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "MonitorStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e65b4317dbb085f7ba96de850e4d22286068f5237166f2e9756edbd425d02518.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "MonitorStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "MonitorStack.assets"
+      ],
+      "metadata": {
+        "/MonitorStack/webHookLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webHookLambdaServiceRole1A032560"
+          }
+        ],
+        "/MonitorStack/webHookLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webHookLambda3427ABA6"
+          }
+        ],
+        "/MonitorStack/webHookLambda/AllowInvoke:MonitorStackAlarmTopic9F999C82": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webHookLambdaAllowInvokeMonitorStackAlarmTopic9F999C82CCFBCA23"
+          }
+        ],
+        "/MonitorStack/webHookLambda/AlarmTopic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webHookLambdaAlarmTopic3DF832BF"
+          }
+        ],
+        "/MonitorStack/AlarmTopic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AlarmTopicD01E77F9"
+          }
+        ],
+        "/MonitorStack/spacesApi4xxAlarm/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "spacesApi4xxAlarmA15E009C"
+          }
+        ],
+        "/MonitorStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/MonitorStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "MonitorStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

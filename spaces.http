@@ -1,0 +1,33 @@
+@url = https://81n9sjbef7.execute-api.eu-west-1.amazonaws.com/prod/
+
+@token = eyJraWQiOiJKMCtzMEhsMTZ0VGlkOWdkZHA0QkdSY0E4VlwvUmRobGRyZ0xzOXdUcjhZaz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjU1YjRjNC1jMDkxLTcwMjktMDNjMi1kYjRlNjNmYmYwNWIiLCJjb2duaXRvOmdyb3VwcyI6WyJhZG1pbnMtYXV0aCJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9pWkh6UFhJS0YiLCJjb2duaXRvOnVzZXJuYW1lIjoiZWx2aXN5dW5nIiwib3JpZ2luX2p0aSI6IjJiZTJkM2I2LTgwY2ItNDVlNS05ZTY2LWE4MTY5ODE3NzMzOSIsImNvZ25pdG86cm9sZXMiOlsiYXJuOmF3czppYW06OjgxNjgxNDQzNjI4NTpyb2xlXC9BdXRoU3RhY2stQ29nbml0b0FkbWluUm9sZTRDMTBGQkE0LTFVWUszWFZVSjFISEciXSwiYXVkIjoiNmVqZDNtN2U2b2hjdWpqOWI2dWY1Mjl1cDQiLCJldmVudF9pZCI6ImE0OWVmMjY2LTRjZmUtNGNhNS05ZGQ5LWI1NWM3YTAwZmU1NCIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjg5NjA3ODQ3LCJleHAiOjE2ODk2MTE0NDcsImlhdCI6MTY4OTYwNzg0NywianRpIjoiNDY4Y2RhMzQtMGQzMi00MjBhLWJhYjUtY2E1NjkwMjhjZWVhIiwiZW1haWwiOiJlbHZpc3l1bmdAZ21haWwuY29tIn0.lRzhisZBavjaguZ3KdiZ-0eHmHMkGQfSKNzl960MwfxDPgZFOcvi1KZgVRLN9_KvgGbkiZ40fWapkf_KGkYwBV03pOkXYkxok0RRi9o_S2Fcct9K6hKjjDdv7wxrDEh7YRFhIU41UAm9xI_1vyF3h0uZbW_sj-no3ZP8BPdXyQITcCM-YgnsJqJKrPUyT5pBvRX-yCOoNa1sbHyQ-RhRGqpl6FyFcEbrm-gXv9_Ya9xz_H6s5kHKoVBeAi1tCL1Mnr_Hkqug9MiqYvS4h_a1DcmK5yN2Y2pFx9nEooRks_2q8SD4LwtghpTIJ1MLsbNMNgz4ffXQS9HotYK6DSoGgA
+
+GET {{url}}/spaces
+Authorization: {{token}}
+###
+
+POST https://81n9sjbef7.execute-api.eu-west-1.amazonaws.com/prod/spaces
+content-type: application/json
+
+{
+    "location": "Dublin",
+    "name": "Best location"
+}
+###
+
+GET https://81n9sjbef7.execute-api.eu-west-1.amazonaws.com/prod/spaces?id=cd511c09-90ed-475e-8dff-4bc19bfa301c
+Authorization: {{token}}
+###
+
+DELETE {{url}}/spaces
+Authorization: {{token}}
+###
+
+PUT https://81n9sjbef7.execute-api.eu-west-1.amazonaws.com/prod/spaces?id=b3e3bd12-eb9d-4384-acb2-aeb39ef773e4
+content-type: application/json
+
+{
+    "location": "London",
+    "name": "Best Location"
+}
+###
